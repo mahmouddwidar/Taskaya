@@ -2,6 +2,8 @@ import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import "../../../css/project.css";
+import Pagination from "@/Components/Pagination";
+import { PROJECT_STATUS_TEXT_MAP } from "../constants";
 
 const getStatusColorClass = (status) => {
     switch (status) {
@@ -88,7 +90,7 @@ export default function Index({ auth, projects }) {
                                                             project.status
                                                         )} px-2 py-1 text-xs font-medium  ring-1 ring-inset`}
                                                     >
-                                                        {project.status}
+                                                        {PROJECT_STATUS_TEXT_MAP[project.status]}
                                                     </span>
                                                 </td>
                                                 <td className="border border-slate-600 px-2 py-3 text-nowrap">
@@ -190,6 +192,8 @@ export default function Index({ auth, projects }) {
                                     })}
                                 </tbody>
                             </table>
+                            {console.log(projects.meta.links)}
+                            <Pagination links={projects.meta.links} />
                         </div>
                     </div>
                 </div>
