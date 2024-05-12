@@ -7,6 +7,7 @@ import { PROJECT_STATUS_TEXT_MAP } from "../constants";
 import TextInput from "@/Components/TextInput";
 import SelectInput from "@/Components/SelectInput";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
+import TableHeading from "@/Components/TableHeading";
 
 const getStatusColorClass = (status) => {
     switch (status) {
@@ -73,76 +74,84 @@ export default function Index({ auth, projects, queryParams = null }) {
                                 <table class=" border-collapse border border-slate-500 w-full">
                                     <thead>
                                         <tr className="bg-slate-700 ">
-                                            <th
-                                                className="border border-slate-600"
-                                                onClick={(e) =>
-                                                    sortChanged("id")
+                                            <TableHeading
+                                                name={"id"}
+                                                sort_field={
+                                                    queryParams.sort_field
                                                 }
+                                                sort_direction={
+                                                    queryParams.sort_direction
+                                                }
+                                                sortable={true}
+                                                sortChanged={sortChanged}
                                             >
-                                                <div className="py-1.5 px-2 cursor-pointer flex justify-between items-center gap-1">
-                                                    ID
-                                                    <div>
-                                                        <ChevronUpIcon className="w-4" />
-                                                        <ChevronDownIcon className="w-4 -mt-2" />
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th className="border border-slate-600 py-1.5">
+                                                ID
+                                            </TableHeading>
+
+                                            <th className="border border-slate-600">
                                                 Image
                                             </th>
-                                            <th
-                                                className="border border-slate-600"
-                                                onClick={(e) =>
-                                                    sortChanged("name")
+
+                                            <TableHeading
+                                                name={"name"}
+                                                sortable={true}
+                                                sortChanged={sortChanged}
+                                                sort_field={
+                                                    queryParams.sort_field
+                                                }
+                                                sort_direction={
+                                                    queryParams.sort_direction
                                                 }
                                             >
-                                                <div className="py-1.5 px-2 cursor-pointer flex justify-center items-center gap-4">
-                                                    Name
-                                                    <div>
-                                                        <ChevronUpIcon className="w-4" />
-                                                        <ChevronDownIcon className="w-4 -mt-2" />
-                                                    </div>
-                                                </div>
-                                            </th>
-                                            <th
-                                                className="border border-slate-600 cursor-pointer"
-                                                onClick={(e) =>
-                                                    sortChanged("status")
+                                                Name
+                                            </TableHeading>
+
+                                            <TableHeading
+                                                name={"status"}
+                                                sortable={true}
+                                                sortChanged={sortChanged}
+                                                sort_field={
+                                                    queryParams.sort_field
+                                                }
+                                                sort_direction={
+                                                    queryParams.sort_direction
                                                 }
                                             >
                                                 Status
-                                                <div>
-                                                    <ChevronUpIcon className="w-4" />
-                                                    <ChevronDownIcon className="w-4 -mt-2" />
-                                                </div>
-                                            </th>
-                                            <th
-                                                className="border border-slate-600 cursor-pointer"
-                                                onClick={(e) =>
-                                                    sortChanged("due_date")
+                                            </TableHeading>
+
+                                            <TableHeading
+                                                name={"due_date"}
+                                                sortable={true}
+                                                sortChanged={sortChanged}
+                                                sort_field={
+                                                    queryParams.sort_field
+                                                }
+                                                sort_direction={
+                                                    queryParams.sort_direction
                                                 }
                                             >
                                                 Due Date
-                                                <div>
-                                                    <ChevronUpIcon className="w-4" />
-                                                    <ChevronDownIcon className="w-4 -mt-2" />
-                                                </div>
-                                            </th>
-                                            <th
-                                                className="border border-slate-600 cursor-pointer"
-                                                onClick={(e) =>
-                                                    sortChanged("created_at")
+                                            </TableHeading>
+
+                                            <TableHeading
+                                                name={"created_at"}
+                                                sortable={true}
+                                                sortChanged={sortChanged}
+                                                sort_field={
+                                                    queryParams.sort_field
+                                                }
+                                                sort_direction={
+                                                    queryParams.sort_direction
                                                 }
                                             >
                                                 Created at
-                                                <div>
-                                                    <ChevronUpIcon className="w-4" />
-                                                    <ChevronDownIcon className="w-4 -mt-2" />
-                                                </div>
-                                            </th>
+                                            </TableHeading>
+
                                             <th className="border border-slate-600">
                                                 Created by
                                             </th>
+                                            
                                             <th className="border border-slate-600">
                                                 Actions
                                             </th>
