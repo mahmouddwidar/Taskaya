@@ -151,7 +151,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                                             <th className="border border-slate-600">
                                                 Created by
                                             </th>
-                                            
+
                                             <th className="border border-slate-600">
                                                 Actions
                                             </th>
@@ -348,7 +348,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                                     </tbody>
                                 </table>
                             </div>
-                            <Pagination links={projects.meta.links} />
+                            <Pagination links={projects.meta.links} queryParams={queryParams} />
                         </div>
                     </div>
                 </div>

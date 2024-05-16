@@ -18,6 +18,14 @@ class TaskController extends Controller
     {
         $query = Task::query();
 
+        if(request('name')) {
+            $query->where('name', "like", "%". request("name") . "%");
+        }
+
+        if(request('status')) {
+            $query->where('status', request('status'));
+        }
+
         $tasks = $query->paginate(10);
 
 
@@ -25,6 +33,7 @@ class TaskController extends Controller
             'Task/Index',
             [
                 "tasks" => TaskResource::collection($tasks),
+                "queryParams" => request()->query()?: null,
             ]
         );
     }
