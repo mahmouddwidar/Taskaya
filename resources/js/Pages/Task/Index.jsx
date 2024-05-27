@@ -6,6 +6,7 @@ import "../../../css/project.css";
 import Pagination from "@/Components/Pagination";
 import TextInput from "@/Components/TextInput";
 import SelectInput from "@/Components/SelectInput";
+import TableHeading from "@/Components/TableHeading";
 
 export default function Index({ auth, tasks, queryParams = null }) {
     queryParams = queryParams || {};
@@ -26,6 +27,20 @@ export default function Index({ auth, tasks, queryParams = null }) {
         SearchFieldChanged(name, e.target.value);
     };
 
+    const sortChanged = (name) => {
+        if (name == queryParams.sort_field) {
+            if (queryParams.sort_direction === "asc") {
+                queryParams.sort_direction = "desc";
+            } else {
+                queryParams.sort_direction = "asc";
+            }
+        } else {
+            queryParams.sort_field = name;
+            queryParams.sort_direction = "asc";
+        }
+        router.get(route("task.index"), queryParams);
+    };
+
     return (
         <Authenticated
             user={auth.user}
@@ -43,38 +58,84 @@ export default function Index({ auth, tasks, queryParams = null }) {
                             <div className=" overflow-auto">
                                 <table class=" border-collapse border border-slate-500 w-full">
                                     <thead>
-                                        <tr className="bg-slate-700 border border-gray-500">
-                                            <th className="border-e border-gray-500">
-                                                <div className="py-1.5 px-2 flex justify-center items-center gap-1 text-nowrap ">
-                                                    ID
-                                                </div>
-                                            </th>
-                                            <th className="border-e border-gray-500">
+                                        <tr className="bg-slate-700 border border-slate-600">
+                                            <TableHeading
+                                                name={"id"}
+                                                sortChanged={sortChanged}
+                                                sortable={true}
+                                                sort_field={
+                                                    queryParams.sort_field
+                                                }
+                                                sort_direction={
+                                                    queryParams.sort_direction
+                                                }
+                                            >
+                                                ID
+                                            </TableHeading>
+
+                                            <th className="border-e border-slate-600">
                                                 <div className="py-1.5 px-2 flex justify-center items-center gap-1 text-nowrap ">
                                                     Image
                                                 </div>
                                             </th>
-                                            <th className="border-e border-gray-500">
-                                                <div className="py-1.5 px-2 flex justify-center items-center gap-1 text-nowrap ">
-                                                    Name
-                                                </div>
-                                            </th>
-                                            <th className="border-e border-gray-500">
-                                                <div className="py-1.5 px-2 flex justify-center items-center gap-1 text-nowrap ">
-                                                    Status
-                                                </div>
-                                            </th>
-                                            <th className="border-e border-gray-500">
-                                                <div className="py-1.5 px-2 flex justify-center items-center gap-1 text-nowrap ">
-                                                    Due Date
-                                                </div>
-                                            </th>
-                                            <th className="border-e border-gray-500">
-                                                <div className="py-1.5 px-2 flex justify-center items-center gap-1 text-nowrap ">
-                                                    Created at
-                                                </div>
-                                            </th>
-                                            <th className="border-e border-gray-500">
+
+                                            <TableHeading
+                                                name={"name"}
+                                                sortChanged={sortChanged}
+                                                sortable={true}
+                                                sort_field={
+                                                    queryParams.sort_field
+                                                }
+                                                sort_direction={
+                                                    queryParams.sort_direction
+                                                }
+                                            >
+                                                Name
+                                            </TableHeading>
+
+                                            <TableHeading
+                                                name={"status"}
+                                                sortChanged={sortChanged}
+                                                sortable={true}
+                                                sort_field={
+                                                    queryParams.sort_field
+                                                }
+                                                sort_direction={
+                                                    queryParams.sort_direction
+                                                }
+                                            >
+                                                Status
+                                            </TableHeading>
+
+                                            <TableHeading
+                                                name={"due_date"}
+                                                sortChanged={sortChanged}
+                                                sortable={true}
+                                                sort_field={
+                                                    queryParams.sort_field
+                                                }
+                                                sort_direction={
+                                                    queryParams.sort_direction
+                                                }
+                                            >
+                                                Due Date
+                                            </TableHeading>
+
+                                            <TableHeading
+                                                name={"created_at"}
+                                                sortChanged={sortChanged}
+                                                sortable={true}
+                                                sort_field={
+                                                    queryParams.sort_field
+                                                }
+                                                sort_direction={
+                                                    queryParams.sort_direction
+                                                }
+                                            >
+                                                Created at
+                                            </TableHeading>
+
+                                            <th className="border-e border-slate-600">
                                                 <div className="py-1.5 px-2 flex justify-center items-center gap-1 text-nowrap ">
                                                     Created by
                                                 </div>
@@ -92,7 +153,7 @@ export default function Index({ auth, tasks, queryParams = null }) {
 
                                             <th></th>
 
-                                            <th className="border-x border-gray-500">
+                                            <th className="border-x border-slate-600">
                                                 <div className="py-1.5 px-2 flex justify-center items-center gap-1 text-nowrap ">
                                                     <TextInput
                                                         placeholder="Project Name"
@@ -115,7 +176,7 @@ export default function Index({ auth, tasks, queryParams = null }) {
                                                     />
                                                 </div>
                                             </th>
-                                            <th className="border-e border-gray-500">
+                                            <th className="border-e border-slate-600 px-2">
                                                 <SelectInput
                                                     className="w-full"
                                                     onChange={(e) => {
@@ -129,7 +190,7 @@ export default function Index({ auth, tasks, queryParams = null }) {
                                                     }
                                                 >
                                                     <option value="">
-                                                        Select input
+                                                        Select Status
                                                     </option>
                                                     <option value="pending">
                                                         pending
