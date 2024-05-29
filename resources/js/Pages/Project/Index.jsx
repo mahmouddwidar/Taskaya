@@ -232,7 +232,7 @@ export default function Index({ auth, projects, queryParams = null }) {
                                                         />
                                                     </td>
                                                     <td className="border border-slate-600 px-2 py-3">
-                                                        {project.name}
+                                                        <Link href={route('project.show', project.id)} className="hover:underline">{project.name}</Link>
                                                     </td>
                                                     <td className="border border-slate-600 px-2 py-3">
                                                         <span
