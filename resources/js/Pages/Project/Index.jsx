@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import "../../../css/project.css";
@@ -6,8 +6,8 @@ import Pagination from "@/Components/Pagination";
 import { PROJECT_STATUS_TEXT_MAP } from "../constants";
 import TextInput from "@/Components/TextInput";
 import SelectInput from "@/Components/SelectInput";
-import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
 import TableHeading from "@/Components/TableHeading";
+import { PlusIcon } from "@heroicons/react/16/solid";
 
 const getStatusColorClass = (status) => {
     switch (status) {
@@ -22,7 +22,13 @@ const getStatusColorClass = (status) => {
     }
 };
 
-export default function Index({ auth, projects, queryParams = null }) {
+export default function Index({
+    auth,
+    projects,
+    project_success,
+    queryParams = null,
+}) {
+    const [showSuccess, setShowSuccess] = useState(true);
     queryParams = queryParams || {};
 
     const searchFieldChange = (name, value) => {
@@ -59,9 +65,18 @@ export default function Index({ auth, projects, queryParams = null }) {
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Projects
-                </h2>
+                <div className="flex justify-between align-items-center">
+                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                        Projects
+                    </h2>
+                    <Link
+                        href={route("project.create")}
+                        className="text-white bg-emerald-600 hover:bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 dark:focus:ring-emerald-800 font-medium rounded-lg text-md px-5 py-2.5 text-center me-2 transition duration-300 ease-out hover:ease-in flex justify-between align-items-center"
+                    >
+                        <PlusIcon className="size-6 me-1" />
+                        Add New
+                    </Link>
+                </div>
             }
         >
             <Head title="Projects" />
@@ -69,6 +84,28 @@ export default function Index({ auth, projects, queryParams = null }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        {project_success && showSuccess && (
+                            <div className="mt-8 bg-green-50 w-1/2 mx-auto border border-green-400 text-green-800 px-4 py-3 rounded relative">
+                                <strong className="font-bold">Success! </strong>
+                                <span className="block sm:inline">
+                                    {project_success}
+                                </span>
+                                <button
+                                    className="absolute top-0 right-0 px-4 py-3"
+                                    onClick={() => setShowSuccess(false)}
+                                >
+                                    <svg
+                                        className="fill-current h-6 w-6 text-green-500"
+                                        role="button"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <title>Close</title>
+                                        <path d="M14.348 5.652a.5.5 0 0 0-.707 0L10 9.293 6.354 5.646a.5.5 0 1 0-.708.708L9.293 10l-3.647 3.646a.5.5 0 0 0 .708.708L10 10.707l3.646 3.647a.5.5 0 0 0 .708-.708L10.707 10l3.647-3.646a.5.5 0 0 0-.006-.702z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        )}
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <div className=" overflow-auto">
                                 <table class=" border-collapse border border-slate-500 w-full">
@@ -232,7 +269,15 @@ export default function Index({ auth, projects, queryParams = null }) {
                                                         />
                                                     </td>
                                                     <td className="border border-slate-600 px-2 py-3">
-                                                        <Link href={route('project.show', project.id)} className="hover:underline">{project.name}</Link>
+                                                        <Link
+                                                            href={route(
+                                                                "project.show",
+                                                                project.id
+                                                            )}
+                                                            className="hover:underline"
+                                                        >
+                                                            {project.name}
+                                                        </Link>
                                                     </td>
                                                     <td className="border border-slate-600 px-2 py-3">
                                                         <span
@@ -348,7 +393,10 @@ export default function Index({ auth, projects, queryParams = null }) {
                                     </tbody>
                                 </table>
                             </div>
-                            <Pagination links={projects.meta.links} queryParams={queryParams} />
+                            <Pagination
+                                links={projects.meta.links}
+                                queryParams={queryParams}
+                            />
                         </div>
                     </div>
                 </div>

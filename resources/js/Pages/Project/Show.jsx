@@ -3,7 +3,7 @@ import { Head } from "@inertiajs/react";
 import { PROJECT_STATUS_TEXT_MAP, STATUS_COLOR_MAP } from "../constants";
 import TasksTable from "../Task/TasksTable";
 
-export default function Show({ auth, tasks, project, queryParams=null }) {
+export default function Show({ auth, tasks, project, queryParams = null }) {
     return (
         <Authenticated
             user={auth.user}
@@ -112,8 +112,18 @@ export default function Show({ auth, tasks, project, queryParams=null }) {
                             </div>
                         </div>
                     </div>
-                    <TasksTable tasks={tasks} queryParams={queryParams} hideProjectNameColumn={true} projectID={project.id}/>
-                    {console.log(tasks)}
+                    {tasks.data.length > 0 ? (
+                        <TasksTable
+                            tasks={tasks}
+                            queryParams={queryParams}
+                            hideProjectNameColumn={true}
+                            projectID={project.id}
+                        />
+                    ) : (
+                        <p className="text-white rounded bg-gray-500 px-5 py-2.5 text-center my-8 text-lg">
+                            There's no tasks to show
+                        </p>
+                    )}
                 </div>
             </div>
         </Authenticated>
