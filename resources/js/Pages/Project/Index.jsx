@@ -61,6 +61,13 @@ export default function Index({
         router.get(route("project.index"), queryParams);
     };
 
+    const deleteProject = project => {
+        if(!window.confirm("Are you sure want to delete this project?")) {
+            return;
+        }
+        router.delete(route('project.destroy', project.id));
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -332,12 +339,12 @@ export default function Index({
                                                             </div>
                                                         </Link>
 
-                                                        <Link
-                                                            href={route(
-                                                                "project.destroy",
-                                                                project.id,
-                                                                true
-                                                            )}
+                                                        <button
+                                                            onClick={(e) =>
+                                                                deleteProject(
+                                                                    project
+                                                                )
+                                                            }
                                                             className=" inline-block"
                                                         >
                                                             <div
@@ -385,7 +392,7 @@ export default function Index({
                                                                     </g>
                                                                 </svg>
                                                             </div>
-                                                        </Link>
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             );
